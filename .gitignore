@@ -1,0 +1,22 @@
+# Ignore large data files
+data/fastq/
+data/reference/
+
+# Ignore Nextflow working dirs
+work/
+.nextflow*
+.results/
+
+# Ignore generated results
+results/
+
+# Ignore log files
+*.log
+
+# Ignore conda local environment folders
+.env/
+.conda/
+
+# Ignore VEP cache
+.vep/
+
