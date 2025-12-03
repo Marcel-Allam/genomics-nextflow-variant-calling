@@ -89,7 +89,30 @@ The design and structure mimic real-world pipelines used in clinical and transla
 
 ```mermaid
 flowchart LR
-    A[Test] --> B[Works?]
+    R[Paired FASTQ files] --> FQC[FASTQC]
+
+    R --> TRIM{Trim reads?}
+    TRIM -- "yes" --> T[TRIM_READS (fastp)]
+    TRIM -- "no"  --> U[Use raw reads]
+
+    T --> ALN[ALIGN_AND_SORT (bwa-mem2 + samtools sort)]
+    U --> ALN
+
+    ALN --> AQC[ALIGN_QC (samtools flagstat / stats / idxstats)]
+    ALN --> COV[COVERAGE_QC (samtools coverage / depth)]
+    ALN --> VC[CALL_VARIANTS (bcftools mpileup + call)]
+
+    VC --> VQC[VARIANT_QC (bcftools stats on raw VCF)]
+    VC --> VEP[ANNOTATE_VEP (VEP offline, GRCh38)]
+
+    AQC --> CS[CLINICAL_SUMMARY (Markdown + HTML)]
+    COV --> CS
+    VQC --> CS
+    VEP --> CS
+
+    CS --> MQC[MULTIQC (multiqc_report.html)]
+    FQC --> MQC
+    AQC --> MQC
+    COV --> MQC
+    VQC --> MQC
 ```
-
-
