@@ -150,6 +150,7 @@ genomics-nextflow-variant-calling/
 FASTQs must be named:
 
 sample_R1.fastq.gz
+
 sample_R2.fastq.gz
 
 4.2 Reference Genome Setup
