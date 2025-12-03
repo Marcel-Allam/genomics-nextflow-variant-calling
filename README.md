@@ -87,8 +87,6 @@ The design and structure mimic real-world pipelines used in clinical and transla
 
 ### 3.2 Mermaid diagram
 
-### 3.2 Mermaid diagram
-
 ```mermaid
 flowchart LR
     R[Paired FASTQ files (data/fastq/*.fastq.gz)] --> FQC[FASTQC]
