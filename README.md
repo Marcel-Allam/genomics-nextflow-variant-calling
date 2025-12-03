@@ -87,30 +87,32 @@ The design and structure mimic real-world pipelines used in clinical and transla
 
 ### 3.2 Pipeline workflow
 
+### 3.2 Pipeline workflow
+
 ```mermaid
 flowchart LR
-    R[Paired FASTQ files] --> FQC[FASTQC]
+    R["Paired FASTQ files"] --> FQC["FASTQC"]
 
-    R --> TRIM[Trim reads?]
-    TRIM --> T[TRIM_READS (fastp)]
-    TRIM --> U[Use raw reads]
+    R --> TRIM["Trim reads"]
+    TRIM --> T["TRIM_READS"]
+    TRIM --> U["Use raw reads"]
 
-    T --> ALN[ALIGN_AND_SORT (bwa-mem2 + samtools sort)]
+    T --> ALN["ALIGN_AND_SORT"]
     U --> ALN
 
-    ALN --> AQC[ALIGN_QC (samtools flagstat / stats / idxstats)]
-    ALN --> COV[COVERAGE_QC (samtools coverage / depth)]
-    ALN --> VC[CALL_VARIANTS (bcftools mpileup + call)]
+    ALN --> AQC["ALIGN_QC"]
+    ALN --> COV["COVERAGE_QC"]
+    ALN --> VC["CALL_VARIANTS"]
 
-    VC --> VQC[VARIANT_QC (bcftools stats on raw VCF)]
-    VC --> VEP[ANNOTATE_VEP (VEP offline, GRCh38)]
+    VC --> VQC["VARIANT_QC"]
+    VC --> VEP["ANNOTATE_VEP"]
 
-    AQC --> CS[CLINICAL_SUMMARY (Markdown + HTML)]
+    AQC --> CS["CLINICAL_SUMMARY"]
     COV --> CS
     VQC --> CS
     VEP --> CS
 
-    CS --> MQC[MULTIQC (multiqc_report.html)]
+    CS --> MQC["MULTIQC"]
 
     FQC --> MQC
     AQC --> MQC
