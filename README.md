@@ -85,15 +85,15 @@ The design and structure mimic real-world pipelines used in clinical and transla
     into a **clinical-style report** (`*.md` + `*.html`)
 11. **MULTIQC** scans the final `results/` folder and produces an HTML QC dashboard
 
-### 3.2 Mermaid diagram
+### 3.2 Pipeline workflow
 
 ```mermaid
 flowchart LR
     R[Paired FASTQ files] --> FQC[FASTQC]
 
-    R --> TRIM{Trim reads?}
-    TRIM -- "yes" --> T[TRIM_READS (fastp)]
-    TRIM -- "no"  --> U[Use raw reads]
+    R --> TRIM[Trim reads?]
+    TRIM --> T[TRIM_READS (fastp)]
+    TRIM --> U[Use raw reads]
 
     T --> ALN[ALIGN_AND_SORT (bwa-mem2 + samtools sort)]
     U --> ALN
@@ -111,8 +111,9 @@ flowchart LR
     VEP --> CS
 
     CS --> MQC[MULTIQC (multiqc_report.html)]
+
     FQC --> MQC
     AQC --> MQC
     COV --> MQC
     VQC --> MQC
-```
+
