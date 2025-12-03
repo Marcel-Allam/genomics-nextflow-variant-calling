@@ -124,6 +124,7 @@ flowchart LR
 ```
 
 4. Quick Start Guide
+
 4.1 Folder Structure
 ```
 genomics-nextflow-variant-calling/
