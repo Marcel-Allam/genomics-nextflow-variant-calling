@@ -122,7 +122,7 @@ flowchart LR
     COV --> MQC
     VQC --> MQC
 ```
-
+```
 4. Quick Start Guide
 4.1 Folder Structure
 genomics-nextflow-variant-calling/
@@ -143,7 +143,7 @@ genomics-nextflow-variant-calling/
 │        └── bwa-mem2* index files
 ├── results/
 ├── work/
-
+```
 
 FASTQs must be named:
 
