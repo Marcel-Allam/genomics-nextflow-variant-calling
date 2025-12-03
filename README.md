@@ -89,29 +89,31 @@ The design and structure mimic real-world pipelines used in clinical and transla
 
 ```mermaid
 flowchart LR
-    R[Paired FASTQ files<br/>data/fastq/*_{R1,R2}.fastq.gz] --> FQC[FASTQC]
+    R[Paired FASTQ files (data/fastq/*_{R1,R2}.fastq.gz)] --> FQC[FASTQC]
 
     R --> TRIM{Trim reads?}
-    TRIM -- "yes" --> T[TRIM_READS<br/>(fastp)]
+    TRIM -- "yes" --> T[TRIM_READS (fastp)]
     TRIM -- "no"  --> U[Use raw reads]
 
-    T --> ALN[ALIGN_AND_SORT<br/>(bwa-mem2 + samtools sort)]
+    T --> ALN[ALIGN_AND_SORT (bwa-mem2 + samtools sort)]
     U --> ALN
 
-    ALN --> AQC[ALIGN_QC<br/>(flagstat / stats / idxstats)]
-    ALN --> COV[COVERAGE_QC<br/>(coverage / depth)]
-    ALN --> VC[CALL_VARIANTS<br/>(bcftools mpileup+call)]
+    ALN --> AQC[ALIGN_QC (flagstat / stats / idxstats)]
+    ALN --> COV[COVERAGE_QC (coverage / depth)]
+    ALN --> VC[CALL_VARIANTS (bcftools mpileup + call)]
 
-    VC --> VQC[VARIANT_QC<br/>(bcftools stats on raw VCF)]
-    VC --> VEP[ANNOTATE_VEP<br/>(VEP offline, GRCh38)]
+    VC --> VQC[VARIANT_QC (bcftools stats on raw VCF)]
+    VC --> VEP[ANNOTATE_VEP (VEP offline, GRCh38)]
 
-    AQC --> CS[CLINICAL_SUMMARY<br/>(Markdown + HTML)]
+    AQC --> CS[CLINICAL_SUMMARY (Markdown + HTML)]
     COV --> CS
     VQC --> CS
     VEP --> CS
 
-    CS --> MQC[MULTIQC<br/>multiqc_report.html]
+    CS --> MQC[MULTIQC (multiqc_report.html)]
+
     FQC --> MQC
     AQC --> MQC
     COV --> MQC
     VQC --> MQC
+
