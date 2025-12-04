@@ -253,4 +253,27 @@ This pipeline is intended as a portfolio project.
 It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
 
 ---
+Example Data to use
+```bash
+bash scripts/download_test_data.sh
+```
+This will create:
+```bash
+data/fastq/
+    EXAMPLE_T_R1.fastq.gz
+    EXAMPLE_T_R2.fastq.gz
+
+data/reference/
+    genome.fa
+    genome.fa.fai
+    genome.fa.dict
+    genome.fa.* (bwa-mem2 indexes)
+```
+
+Run the pipeline with the downloaded data:
+```bash
+nextflow run main.nf -profile conda \
+  --reads "data/fastq/*_{R1,R2}.fastq.gz" \
+  --reference "data/reference/genome.fa"
+```
 
