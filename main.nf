@@ -8,11 +8,16 @@
 //     2) Optionally trims reads using fastp (quality-based trimming)
 //     3) Aligns reads to a reference genome with bwa-mem2
 //     4) Sorts and indexes BAM files using samtools
-//     5) Calls variants using bcftools mpileup + call
-//     6) Annotates variants using VEP (offline cache, GRCh38)
+//     5) Generates alignment and coverage QC metrics
+//     6) Calls variants using bcftools mpileup + call
+//     7) Runs variant-level QC with bcftools stats
+//     8) Annotates variants using VEP (offline cache, GRCh38)
+//     9) Exports annotated variants to CSV
+//    10) Builds a clinical-style Markdown/HTML report per sample
+//    11) Aggregates QC metrics using MultiQC
 //
 // Notes:
-//   - This is a teaching / portfolio pipeline, not a clinical pipeline.
+//   - This is a portfolio pipeline, not a clinical pipeline.
 //   - It demonstrates a realistic structure similar to pipelines used in
 //     cancer / WES workflows.
 //
@@ -28,10 +33,24 @@ nextflow.enable.dsl = 2
 // PARAMETERS (with fallbacks)
 // -----------------------------
 
+// Paired-end reads glob
 params.reads     = params.reads     ?: "data/fastq/*_{R1,R2}.fastq.gz"
+
+// Reference FASTA (must be pre-indexed for bwa-mem2 + samtools + bcftools)
 params.reference = params.reference ?: "data/reference/genome.fa"
+
+// Output directory
 params.outdir    = params.outdir    ?: "results"
 
+// Trimming behaviour
+params.trim_reads = params.trim_reads instanceof Boolean ? params.trim_reads : false
+params.trim_qual  = params.trim_qual ?: 20  // 20 = standard, 30 = strict
+
+// Threads per process
+params.cpus       = params.cpus ?: 4
+
+// Ensure main output directory exists
+new File(params.outdir).mkdirs()
 // Ensure main output directory exists
 new File(params.outdir).mkdirs()
 
@@ -53,11 +72,12 @@ Channel
 // PROCESSES
 // -----------------------------
 
+// -----------------------------------------------------------------------------
 // RAW FASTQ QC (FastQC)
 //
 // Always run this first on the untrimmed reads to understand
 // library quality, adapter content, and base quality profiles.
-
+// -----------------------------------------------------------------------------
 process FASTQC {
 
     tag "${sample_id}"
@@ -79,6 +99,7 @@ process FASTQC {
     """
 }
 
+// -----------------------------------------------------------------------------
 // OPTIONAL TRIMMING (fastp)
 //
 // This step is only used when params.trim_reads == true.
@@ -95,7 +116,7 @@ process FASTQC {
 // You can enable trimming and choose the threshold using:
 //   --trim_reads true --trim_qual 20
 //   --trim_reads true --trim_qual 30
-
+// -----------------------------------------------------------------------------
 process TRIM_READS {
 
     tag "${sample_id}"
@@ -135,6 +156,7 @@ process TRIM_READS {
     """
 }
 
+// -----------------------------------------------------------------------------
 // ALIGN + SORT BAM
 //
 // Aligns reads to the reference genome using bwa-mem2,
@@ -145,7 +167,7 @@ process TRIM_READS {
 // its index files already exist in data/reference/.
 // We do NOT attempt to build a new index inside Nextflow,
 // because indexing a whole GRCh38 genome requires >50GB RAM.
-
+// -----------------------------------------------------------------------------
 process ALIGN_AND_SORT {
 
     tag "${sample_id}"
@@ -252,16 +274,13 @@ process COVERAGE_QC {
     """
 }
 
-
-
-
-
+// -----------------------------------------------------------------------------
 // CALL VARIANTS (bcftools)
 //
 // Uses bcftools mpileup + call to produce a raw VCF of variants.
 // The reference genome is taken directly from params.reference,
 // so we do not need to stage it as a separate channel.
-
+// -----------------------------------------------------------------------------
 process CALL_VARIANTS {
 
     tag "${sample_id}"
@@ -287,6 +306,7 @@ process CALL_VARIANTS {
     """
 }
 
+// -----------------------------------------------------------------------------
 // ANNOTATE VARIANTS WITH VEP
 //
 // Annotates variants using Ensembl VEP in OFFLINE mode, assuming that
@@ -296,7 +316,7 @@ process CALL_VARIANTS {
 //   - decompress the bgzipped VCF to a plain text file: input.vcf
 //   - tell VEP explicitly that the input format is VCF
 //   - stream annotated VCF back out and re-compress with bgzip
-
+// -----------------------------------------------------------------------------
 process ANNOTATE_VEP {
 
     tag "${sample_id}"

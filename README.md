@@ -3,11 +3,6 @@
 Repository: `genomics-nextflow-variant-calling`  
 Workflow engine: **Nextflow DSL2**  
 Environment: **Conda** (`genomics_env`)
-
-> ⚠️ **IMPORTANT**  
-> This pipeline is designed for training and portfolio purposes only.  
-> It is **not** validated for clinical decision-making and must **not** be used to guide patient care.
-
 ---
 
 ## 1. Overview
@@ -254,9 +249,8 @@ nextflow run main.nf
 
 8. Disclaimer
 
-This pipeline is intended for educational and portfolio use only.
-It must not be used to guide clinical diagnosis or treatment.
-
+This pipeline is intended as a portfolio project.
+It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
 
 ---
 
