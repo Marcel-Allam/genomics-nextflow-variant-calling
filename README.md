@@ -254,10 +254,3 @@ It has not undergone analytical validation, regulatory certification, or clinica
 
 ---
 
-If you want, I can now also generate:
-
-✅ A pipeline **badge header section**  
-✅ A **README.Rmd** with code-folding  
-✅ A **GitHub Pages documentation site**  
-
-Just say **“add badges”**, **“make a pkgdown-style site”**, or **“generate README.Rmd with fo
