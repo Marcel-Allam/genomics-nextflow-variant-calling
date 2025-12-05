@@ -31,13 +31,13 @@ echo "======================================"
 echo " Downloading example paired-end FASTQs"
 echo "======================================"
 
-# These are small Illumina 2×150 bp FASTQs (public demo data).
+# These are small Illumina 2×150 bp FASTQs.
 # Replace with any public FASTQ if desired.
 wget -O data/fastq/EXAMPLE_T_R1.fastq.gz \
-  "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR390/004/SRR3907284/SRR3907284_1.fastq.gz"
+  "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/ERR194147/ERR194147_1.fastq.gz"
 
 wget -O data/fastq/EXAMPLE_T_R2.fastq.gz \
-  "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR390/004/SRR3907284/SRR3907284_2.fastq.gz"
+  "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/ERR194147/ERR194147_2.fastq.gz"
 
 echo "Example FASTQs downloaded:"
 ls -1 data/fastq
