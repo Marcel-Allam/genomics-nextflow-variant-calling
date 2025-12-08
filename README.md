@@ -28,16 +28,16 @@ The design and structure mimic real-world pipelines used in clinical and transla
 
 ## 2. Key Features
 
-- 🧬 **Variant calling pipeline**
+- **Variant calling pipeline**
   - `bwa-mem2` alignment
   - `samtools` for BAM processing and QC
   - `bcftools mpileup + call` for variant calling (germline-style)
-- 📊 **Comprehensive QC stack**
+- **Comprehensive QC stack**
   - Raw read QC: **FastQC**
   - Alignment QC: `samtools flagstat`, `samtools stats`, `samtools idxstats`
   - Coverage QC: `samtools coverage`, `samtools depth`
   - Variant QC: `bcftools stats` (on *raw* VCF)
-- 🧠 **Clinical-style reporting**
+- **Clinical-style reporting**
   - Single-sample **Markdown + HTML** report
   - Summary overview (“Section 0”) with:
     - Overall QC status: **PASS / WARN / FAIL**
@@ -47,17 +47,17 @@ The design and structure mimic real-world pipelines used in clinical and transla
     - High-impact variant count
   - Detailed sections for alignment, coverage, variant QC, VEP impact, and tool versions
   - Flat CSV export of annotated variants for further filtering / visualisation
-- 📈 **MultiQC integration**
+- **MultiQC integration**
   - Aggregated QC across:
     - FastQC
     - samtools alignment metrics
     - bcftools stats
     - coverage QC
-- ✅ **Version logging**
+- **Version logging**
   - Records versions of Nextflow, samtools, bcftools, and VEP in the report
-- 📦 **Reproducible environment**
+- **Reproducible environment**
   - Conda environment (e.g. `envs/genomics_env.yml`) with all required tools
-- 🧪 **Offline-friendly**
+- **Offline-friendly**
   - Uses VEP in **offline cache** mode (GRCh38)
 
 ---
