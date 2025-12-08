@@ -255,6 +255,8 @@ It has not undergone analytical validation, regulatory certification, or clinica
 ---
 If you would like example data to use then follow the instructions below.
 The script below downloads a small paired-end FASTQ sample from the ENA public archive and a minimal GRCh38 (chr22) reference genome from the Ensembl FTP repository, allowing users to run the full pipeline without large datasets.
+
+Run the script:
 ```bash
 bash scripts/download_test_data.sh
 ```
