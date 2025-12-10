@@ -280,5 +280,5 @@ nextflow run main.nf -profile conda \
 
 ## 9. Disclaimer
 
-This pipeline is intended as a portfolio project.
-It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
+**This pipeline is intended as a portfolio project.
+It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.**
