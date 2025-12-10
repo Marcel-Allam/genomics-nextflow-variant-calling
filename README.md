@@ -118,9 +118,9 @@ flowchart LR
     VQC --> MQC
 ```
 
-4. Quick Start Guide
+## 4. Quick Start Guide
 
-4.1 Folder Structure
+### 4.1 Folder Structure
 ```
 genomics-nextflow-variant-calling/
 ├── main.nf
@@ -148,7 +148,7 @@ sample_R1.fastq.gz
 
 sample_R2.fastq.gz
 
-4.2 Reference Genome Setup
+### 4.2 Reference Genome Setup
 
 Place the reference at:
 
@@ -162,18 +162,19 @@ samtools faidx data/reference/genome.fa
 samtools dict data/reference/genome.fa -o data/reference/genome.fa.dict
 ```
 
-4.3 Install Conda Environment
+### 4.3 Install Conda Environment
 ```bash
 conda env create -f envs/genomics_env.yml
 conda activate genomics_env
 ```
 
-5. Running the Pipeline
-5.1 Basic run
+## 5. Running the Pipeline
+
+### 5.1 Basic run
 ```bash
 nextflow run main.nf
 ```
-5.2 Enable trimming
+### 5.2 Enable trimming
 
 Trim at Phred 20:
 ```bash
@@ -185,22 +186,22 @@ Trim at Phred 30:
 nextflow run main.nf --trim_reads true --trim_qual 30
 ```
 
-5.3 Specify FASTQ pattern
+### 5.3 Specify FASTQ pattern
 ```bash
 nextflow run main.nf --reads "data/fastq/SAMPLE_{R1,R2}.fastq.gz"
 ```
 
-5.4 Specify reference genome
+### 5.4 Specify reference genome
 ```bash
 nextflow run main.nf --reference "data/reference/genome.fa"
 ```
 
-5.5 Resume a run
+### 5.5 Resume a run
 ```bash
 nextflow run main.nf -resume
 ```
 
-6. Outputs
+## 6. Outputs
 FASTQC
 results/fastqc/
 
@@ -232,7 +233,7 @@ results/reports/sample_clinical_summary.html
 MultiQC Output
 results/multiqc/multiqc_report.html
 
-7. Cleaning and Re-running
+## 7. Cleaning and Re-running
 Clean pipeline metadata
 ```bash
 nextflow clean -f
@@ -247,14 +248,7 @@ Re-run from scratch
 nextflow run main.nf
 ```
 
-8. Disclaimer
-
-This pipeline is intended as a portfolio project.
-It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
-
----
-If you would like example data to use then follow the instructions below.
-The script below downloads a small paired-end FASTQ sample from the ENA public archive and a minimal GRCh38 (chr22) reference genome from the Ensembl FTP repository, allowing users to run the full pipeline without large datasets.
+## 8. download test data and run the script  
 
 Run the script:
 ```bash
@@ -280,3 +274,11 @@ nextflow run main.nf -profile conda \
   --reference "data/reference/genome.fa"
 ```
 
+## 9. Disclaimer
+
+**This pipeline is intended as a portfolio project.
+It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
+
+---
+If you would like example data to use then follow the instructions below.
+The script below downloads a small paired-end FASTQ sample from the ENA public archive and a minimal GRCh38 (chr22) reference genome from the Ensembl FTP repository, allowing users to run the full pipeline without large datasets.**
