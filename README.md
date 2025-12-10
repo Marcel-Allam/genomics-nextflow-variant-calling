@@ -248,7 +248,10 @@ Re-run from scratch
 nextflow run main.nf
 ```
 
-## 8. download test data and run the script  
+## 8. Download test data and run the script  
+If you would like example data to use then follow the instructions below.
+The script below downloads a small paired-end FASTQ sample from the ENA public archive and a minimal GRCh38 (chr22) reference genome from the Ensembl FTP repository, allowing users to run the full pipeline without large datasets.
+
 
 Run the script:
 ```bash
@@ -273,12 +276,9 @@ nextflow run main.nf -profile conda \
   --reads "data/fastq/*_{R1,R2}.fastq.gz" \
   --reference "data/reference/genome.fa"
 ```
+---
 
 ## 9. Disclaimer
 
-**This pipeline is intended as a portfolio project.
+This pipeline is intended as a portfolio project.
 It has not undergone analytical validation, regulatory certification, or clinical quality assurance procedures required for diagnostic use.
-
----
-If you would like example data to use then follow the instructions below.
-The script below downloads a small paired-end FASTQ sample from the ENA public archive and a minimal GRCh38 (chr22) reference genome from the Ensembl FTP repository, allowing users to run the full pipeline without large datasets.**
